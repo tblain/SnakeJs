@@ -10,19 +10,24 @@
 </head>
 <body>
 
-<canvas id="myCanvas" width="480" height="320"></canvas>
+<canvas id="myCanvas" width="1600" height="1000"></canvas>
 
 <script>
 	var canvas = document.getElementById("myCanvas");
 	var ctx = canvas.getContext("2d");
 	var ballRadius = 10;
 	var x = canvas.width/2;
-	var y = canvas.height-30;
+	var y = canvas.height/2;
 	
 	var couleur = "#0095DD";
 
+	var um = 5; //unité de longueur
+
 	var dx = 0;
-	var dy = 1;
+	var dy = 5;
+
+	var height = canvas.height;
+	var width = canvas.width;
 	
 	var coor;
 
@@ -35,6 +40,18 @@
 
 	document.addEventListener("keydown", keyDownHandler, false);
 	//document.addEventListener("keyup", keyUpHandler, false);
+
+	function init() {
+		for (var i = 100 - um; i < canvas.width - 100 + um; i++) {
+			drawBall(i, 100 - um);
+			drawBall(i, height - 100 + um)
+		}
+
+		for (var i = 100 - um; i < canvas.height - 100 + um; i++) {
+			drawBall(100 - um, i);
+			drawBall(width - 100 + um, i);
+		}
+	}
 
 	function coord(x, y) {
 		this.x = x;
@@ -62,11 +79,15 @@
 		else if(e.keyCode == 40) {
 			downPressed = true
 		}
+		else if (e.keyCode == 69) {
+			x = 400;
+			y = 400;
+		}
 	}
 
-	function drawBall() {
+	function drawBall(bx, by) {
 	    ctx.beginPath();
-	    ctx.arc(x, y, ballRadius, 0, Math.PI*2);
+	    ctx.rect(bx, by, um, um);
 	    ctx.fillStyle = couleur;
 	    ctx.fill();
 	    ctx.closePath();
@@ -74,40 +95,51 @@
 
 	function draw() {
 	    //ctx.clearRect(0, 0, canvas.width, canvas.height);
+		/*
 		coor = new Coord(x, y);
-		if (list.inArray(coor, list) == -1) {
-			couleur = "#000000";
+		if (list.indexOf(coor ) == -1) {
+			couleur = "#0095DD";
 		}
-
+		*/
 	    if(rightPressed) {
-	        dx = 1;
+	        dx = um;
 	        dy = 0;
 	        rightPressed = false;
 	    }
 	    else if(leftPressed) {
-	        dx = -1;
+	        dx = -um;
 	        dy = 0;
 	        leftPressed = false;
 	    }
 	    else if(downPressed) {
 	        dx = 0;
-	        dy = 1;
+	        dy = um;
 	        downPressed = false;
 	    }
 	    else if(upPressed) {
 	    	dx = 0;
-	        dy = -1;
+	        dy = -um;
 	        upPressed = false;
 	    }
-	    
-	    x += dx;
-	    y += dy;
 
-		list.push();
-	    drawBall();
+	    if ( ( x + 100 < width ) && ( dx == um ) ) {
+		    x += dx;
+	    } else if ( ( x - 100 > 0 ) && ( dx == - um ) ) {
+	    	x += dx;
+	    } else if ( ( y - 100 > 0 ) && ( dy == - um ) ) {
+	    	y += dy;
+	    } else if ( ( y + 100 < height ) && ( dy ==  um ) ) {
+	    	y += dy;
+	    }
+	     //( y - 100 > 0  ) && ( y + 100 < height ) ) {
+
+		//list.push(coor);
+	    drawBall(x, y);
 	}
 
-	setInterval(draw, 10);
+	init();
+
+	setInterval(draw, 20);
 </script>
 	
 </body>
