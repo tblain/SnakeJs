@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<canvas id="myCanvas" width="1600" height="1000"></canvas>
+<canvas id="myCanvas" width="750" height="750"></canvas>
 
 <script>
 	var canvas = document.getElementById("myCanvas");
@@ -28,28 +28,79 @@
 
 	var height = canvas.height;
 	var width = canvas.width;
-	
-	var coor;
 
 	var rightPressed = false;
 	var leftPressed = false;
 	var upPressed = false;
 	var downPressed = false;
 
-	var list = new Array();
+	//var list = new Array();
+
+	//-----------------------------------------------------------
+
+	// class LC {
+	// 	class Maill {
+	// 		constructeur(valeur, suiv) {
+	// 			this.val = valeur;
+	// 			this.suiv = suiv;
+	// 		}
+	// 	}
+
+	// 	constructeur() {
+	// 		this.premier = LC.Maill(null, null);
+	// 		this.nbE = 0;
+	// 	}
+
+
+	// 	contient(val) {
+	// 		var cour = this.premier;
+	// 		var trouve = false;
+
+	// 		while (cour != null  and cour.val != val) {
+	// 			cour = cour.suiv;
+	// 		}
+
+	// 		if (cour.val == val)
+	// 			trouve = true;
+
+	// 		return trouve;
+	// 	}
+
+	// 	accesK(id) {
+	// 		var cour = this.premier;
+	// 		var i = 0;
+
+	// 		while (cour != null  and cour.val != val) {
+	// 			cour = cour.suiv;
+	// 		}
+
+	// 		if (cour.val == val) {
+	// 			indice = i;
+	// 		}
+
+	// 		return indice;
+	// 	}
+
+	// 	set(id, val) {
+
+	// 	}
+
+	// }
+
+	//-----------------------------------------------------------
 
 	document.addEventListener("keydown", keyDownHandler, false);
 	//document.addEventListener("keyup", keyUpHandler, false);
 
 	function init() {
 		for (var i = 100 - um; i < canvas.width - 100 + um; i++) {
-			drawBall(i, 100 - um);
-			drawBall(i, height - 100 + um)
+			drawSquare(i, 100 - um);
+			drawSquare(i, height - 100 + um)
 		}
 
 		for (var i = 100 - um; i < canvas.height - 100 + um; i++) {
-			drawBall(100 - um, i);
-			drawBall(width - 100 + um, i);
+			drawSquare(100 - um, i);
+			drawSquare(width - 100 + um, i);
 		}
 	}
 
@@ -85,7 +136,7 @@
 		}
 	}
 
-	function drawBall(bx, by) {
+	function drawSquare(bx, by) {
 	    ctx.beginPath();
 	    ctx.rect(bx, by, um, um);
 	    ctx.fillStyle = couleur;
@@ -101,25 +152,38 @@
 			couleur = "#0095DD";
 		}
 		*/
-	    if(rightPressed) {
+	    if ( rightPressed && dx != - um ) {
 	        dx = um;
 	        dy = 0;
-	        rightPressed = false;
-	    }
-	    else if(leftPressed) {
-	        dx = -um;
-	        dy = 0;
+	        downPressed = false;
 	        leftPressed = false;
+	        rightPressed = false;
+	        upPressed = false;
 	    }
-	    else if(downPressed) {
+	    else if ( leftPressed && dx != um ) {
+	        dx = - um;
+	        dy = 0;
+	        downPressed = false;
+	        leftPressed = false;
+	        rightPressed = false;
+	        upPressed = false;
+	    }
+	    else if ( downPressed && dy != - um ) {
 	        dx = 0;
 	        dy = um;
 	        downPressed = false;
-	    }
-	    else if(upPressed) {
-	    	dx = 0;
-	        dy = -um;
+	        leftPressed = false;
+	        rightPressed = false;
 	        upPressed = false;
+	    }
+	    else if ( upPressed && dy != um ) {
+	    	dx = 0;
+	        dy = - um;
+	        downPressed = false;
+	        leftPressed = false;
+	        rightPressed = false;
+	        upPressed = false;
+
 	    }
 
 	    if ( ( x + 100 < width ) && ( dx == um ) ) {
@@ -131,15 +195,15 @@
 	    } else if ( ( y + 100 < height ) && ( dy ==  um ) ) {
 	    	y += dy;
 	    }
-	     //( y - 100 > 0  ) && ( y + 100 < height ) ) {
+	    //( y - 100 > 0  ) && ( y + 100 < height ) ) {
 
 		//list.push(coor);
-	    drawBall(x, y);
+	    drawSquare(x, y);
 	}
 
 	init();
 
-	setInterval(draw, 20);
+	setInterval(draw, 50);
 </script>
 	
 </body>
