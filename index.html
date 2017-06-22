@@ -38,54 +38,53 @@
 
 	//-----------------------------------------------------------
 
-	// class LC {
-	// 	class Maill {
-	// 		constructeur(valeur, suiv) {
-	// 			this.val = valeur;
-	// 			this.suiv = suiv;
-	// 		}
-	// 	}
+	class Maill {
+		constructeur(valeur, suiv) {
+			this.val = valeur;
+			this.suiv = suiv;
+		}
+	}
+	class LC {	
+		constructeur() {
+			this.premier = new Maill(null, null);
+			this.nbE = 0;
+		}
 
-	// 	constructeur() {
-	// 		this.premier = LC.Maill(null, null);
-	// 		this.nbE = 0;
-	// 	}
 
+		contient(val) {
+			var cour = this.premier;
+			var trouve = false;
 
-	// 	contient(val) {
-	// 		var cour = this.premier;
-	// 		var trouve = false;
+			while (cour != null  && cour.val != val) {
+				cour = cour.suiv;
+			}
 
-	// 		while (cour != null  and cour.val != val) {
-	// 			cour = cour.suiv;
-	// 		}
+			if (cour.val == val)
+				trouve = true;
 
-	// 		if (cour.val == val)
-	// 			trouve = true;
+			return trouve;
+		}
 
-	// 		return trouve;
-	// 	}
+		accesK(id) {
+			var cour = this.premier;
+			var i = 0;
 
-	// 	accesK(id) {
-	// 		var cour = this.premier;
-	// 		var i = 0;
+			while (cour != null  && cour.val != val) {
+				cour = cour.suiv;
+			}
 
-	// 		while (cour != null  and cour.val != val) {
-	// 			cour = cour.suiv;
-	// 		}
+			if (cour.val == val) {
+				indice = i;
+			}
 
-	// 		if (cour.val == val) {
-	// 			indice = i;
-	// 		}
+			return indice;
+		}
 
-	// 		return indice;
-	// 	}
+		// set(id, val) {
 
-	// 	set(id, val) {
+		// }
 
-	// 	}
-
-	// }
+	}
 
 	//-----------------------------------------------------------
 
