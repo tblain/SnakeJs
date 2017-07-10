@@ -34,56 +34,111 @@
 	var upPressed = false;
 	var downPressed = false;
 
-	//var list = new Array();
+	var ajoute = false;
+
+	var list;
+
+	// var coor = null;
 
 	//-----------------------------------------------------------
 
 	class Maill {
-		constructeur(valeur, suiv) {
+		constructor(valeur, suiv) {
 			this.val = valeur;
 			this.suiv = suiv;
 		}
 	}
 	class LC {	
-		constructeur() {
+		constructor() {
 			this.premier = new Maill(null, null);
 			this.nbE = 0;
+			this.dernier = this.premier;
 		}
 
 
-		contient(val) {
+		contient(valeur) {
 			var cour = this.premier;
 			var trouve = false;
+			if (valeur != null) {
+				while (cour != null  && !(cour.val.equals(valeur)) ) {
+					cour = cour.suiv;
+				}
 
-			while (cour != null  && cour.val != val) {
-				cour = cour.suiv;
+				if (cour.val.equals(valeur) ){
+					trouve = true;
+				}
 			}
-
-			if (cour.val == val)
-				trouve = true;
 
 			return trouve;
 		}
 
-		accesK(id) {
-			var cour = this.premier;
+		getMaillon(pos) {
+			var cour = this.premier.suiv;
 			var i = 0;
 
-			while (cour != null  && cour.val != val) {
+			while (cour != null  && i < pos) {
 				cour = cour.suiv;
+				i++;
 			}
 
-			if (cour.val == val) {
-				indice = i;
+			if (i == pos) {
+				return cour;	
 			}
-
-			return indice;
 		}
 
 		// set(id, val) {
+		// 	mail = this.getMaillon(id);
 
+		// 	if (mail != None) {
+		// 		mail.val = val;
+		// 	}
 		// }
 
+		ajoutTete(val) {
+			var mail = new Maill(val, null);
+
+			if (this.nbE == 0) {
+				this.premier = mail;
+				this.dernier = this.premier;
+			} else {
+				this.dernier.suiv = mail;
+				this.dernier == mail;
+			}
+
+			this.nbE++;
+		}
+
+		retireQueue() { // supprime la queue et renvoie la val supprimée
+			valSuppr = this.premier.val;
+			this.premier.suiv = this.premier.suiv.suiv;
+			this.nbE--;
+			return valSuppr;
+		}
+	}
+
+	class Coord {
+		constructor(x, y) {
+			this.x = x;
+			this.y = y;
+		}
+
+		getX() {
+			return this.x;
+		}
+
+		getY() {
+			return this.y;
+		}
+
+		equals(coor2){
+			var egalite = false;
+
+			if (coor2 != null) {
+				egalite = ( this.getX == coor2.getX ) & ( this.getY == coor2.getY );
+			}
+
+			return egalite;
+		}
 	}
 
 	//-----------------------------------------------------------
@@ -101,19 +156,8 @@
 			drawSquare(100 - um, i);
 			drawSquare(width - 100 + um, i);
 		}
-	}
 
-	function coord(x, y) {
-		this.x = x;
-		this.y = y;
-
-		function getX() {
-			return this.x;
-		}
-
-		function getY() {
-			return this.y;
-		}
+		list = new LC();
 	}
 
 	function keyDownHandler(e) {
@@ -145,12 +189,11 @@
 
 	function draw() {
 	    //ctx.clearRect(0, 0, canvas.width, canvas.height);
-		/*
-		coor = new Coord(x, y);
-		if (list.indexOf(coor ) == -1) {
-			couleur = "#0095DD";
-		}
-		*/
+		
+		// if (list.indexOf(coor ) == -1) {
+		// 	couleur = "#0095DD";
+		// }
+		
 	    if ( rightPressed && dx != - um ) {
 	        dx = um;
 	        dy = 0;
@@ -187,22 +230,48 @@
 
 	    if ( ( x + 100 < width ) && ( dx == um ) ) {
 		    x += dx;
+		    ajoute = true;
 	    } else if ( ( x - 100 > 0 ) && ( dx == - um ) ) {
 	    	x += dx;
+	    	ajoute = true;
 	    } else if ( ( y - 100 > 0 ) && ( dy == - um ) ) {
 	    	y += dy;
+	    	ajoute = true;
 	    } else if ( ( y + 100 < height ) && ( dy ==  um ) ) {
 	    	y += dy;
+	    	ajoute = true;
 	    }
+
+	    // coor = new Coord(x, y);
+
+	    // if (list.contient(coor)) {
+	    // 	alert("test");
+	    // }
+
+	    // if (ajoute) {
+	    // 	list.ajoutTete(coor);
+	    // 	ajoute = false;
+	    // }
+
 	    //( y - 100 > 0  ) && ( y + 100 < height ) ) {
 
-		//list.push(coor);
 	    drawSquare(x, y);
 	}
 
-	init();
+	init(); 
 
-	setInterval(draw, 50);
+    var coor = new Coord(1, 2);
+    var coor2 = new Coord(4, 3);
+    list.ajoutTete(coor);
+    // list.ajoutTete(coor2);
+
+    if (list.contient(coor2)) {
+    	alert("contient");
+    } else {
+    	alert("contient pas");
+    }
+	
+	// setInterval(draw, 50);
 </script>
 	
 </body>
