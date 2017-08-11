@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>Gamedev Canvas Workshop</title>
+    <title>Snake</title>
     <style>
     	* { padding: 0; margin: 0; }
     	canvas { background: #eee; display: block; margin: 0 auto; }
@@ -76,13 +76,13 @@
 			var cour = this.premier.suiv;
 			var i = 0;
 
-			while (cour != null  && i < pos) {
+			while (cour != null && i < pos) {
 				cour = cour.suiv;
 				i++;
 			}
 
 			if (i == pos) {
-				return cour;	
+				return cour.val;	
 			}
 		}
 
@@ -98,11 +98,11 @@
 			var mail = new Maill(val, null);
 
 			if (this.nbE == 0) {
-				this.premier = mail;
-				this.dernier = this.premier;
+				this.premier.suiv = mail;
+				this.dernier = this.premier.suiv;
 			} else {
 				this.dernier.suiv = mail;
-				this.dernier == mail;
+				this.dernier = mail;
 			}
 
 			this.nbE++;
@@ -134,10 +134,14 @@
 			var egalite = false;
 
 			if (coor2 != null) {
-				egalite = ( this.getX == coor2.getX ) & ( this.getY == coor2.getY );
+				egalite = ( this.getX == coor2.getX ) && ( this.getY == coor2.getY );
 			}
 
 			return egalite;
+		}
+
+		affiche() {
+			return this.getX() + " " + this.getY();
 		}
 	}
 
@@ -260,16 +264,37 @@
 
 	init(); 
 
+// test classes
+
     var coor = new Coord(1, 2);
     var coor2 = new Coord(4, 3);
+    var coor3 = new Coord(3, 3);
+    var coor4 = new Coord(4, 4);
+    var coor5 = new Coord(5, 3);
+    var coor6 = new Coord(6, 3);
+    var coor7 = new Coord(7, 3);
+    
     list.ajoutTete(coor);
-    // list.ajoutTete(coor2);
+    list.ajoutTete(coor2);
+    list.ajoutTete(coor3);
+    list.ajoutTete(coor4);
+    list.ajoutTete(coor5);
+    list.ajoutTete(coor6);
+    list.ajoutTete(coor7);
+    
+    // alert(list.getMaillon(3).affiche());
+    
+    // alert(coor.affiche());
 
-    if (list.contient(coor2)) {
-    	alert("contient");
-    } else {
-    	alert("contient pas");
-    }
+    alert(coor2.equals(coor3));
+
+    // alert(list.contient(coor));
+
+    // if (list.contient(coor2)) {
+    // 	alert("contient");
+    // } else {
+    // 	alert("contient pas");
+    // }
 	
 	// setInterval(draw, 50);
 </script>
